@@ -199,17 +199,19 @@ const logout = asyncHandler( async (req,res) => {
             httpOnly: true,
             secure: true
         });
-        return res.sendStatus(204); //forbidden
+         res.sendStatus(204); //forbidden
+        await User.findOneAndUpdate(refreshToken, {
+            refreshToken:"",
+        });
     } 
-    await User.findByIdAndUpdate(refreshToken,{
-        refreshToken:""
-    });
     res.clearCookie("refreshToken",{
         httpOnly: true,
         secure: true
     });
-    return res.sendStatus(204); //forbidden
+     res.sendStatus(204); //forbidden
 });
+
+
 module.exports = { 
 createUser,
 loginUrlCtrl,
