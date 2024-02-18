@@ -7,12 +7,16 @@ createProduct,
 getaProduct,
 getAllProduct,
 updateProduct,
-deleteProduct
+deleteProduct,
+addToWishLst,
+rating
 } = require("../controller/productController");
 
 
 router.post("/", authMiddleware, isAdmin, createProduct);
 router.get("/", getAllProduct);
+router.put("/wishlist", authMiddleware, addToWishLst);
+router.put("/rating", authMiddleware, rating);
 router.get("/:id", getaProduct);
 router.put("/:id", authMiddleware, isAdmin, updateProduct);
 router.delete("/:id", authMiddleware, isAdmin, deleteProduct);
