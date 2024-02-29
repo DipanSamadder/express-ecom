@@ -1,8 +1,11 @@
-const mongoose = require('mongoose'); // Erase if already required
+const mongoose = require('mongoose'); 
+
+// Erase if already required
 const Schema = mongoose.Schema;
 const bcrypt=require("bcrypt");
 const crypto = require("crypto");
 // Declare the Schema of the Mongo model
+
 var userSchema = new mongoose.Schema({
     firstname:{
         type:String,
@@ -38,8 +41,10 @@ var userSchema = new mongoose.Schema({
         type: Array,
         default: [],
     },
-    address:[{type: Schema.Types.ObjectId, ref: "Address"}],
-    wishlist: [{type: Schema.Types.ObjectId, ref: "Product Wishlist"}],
+    address:{
+        type:String,
+    },
+    wishlist: [{type: Schema.Types.ObjectId, ref: "Product"}],
     refreshToken:{
         type:String,
     },
@@ -47,9 +52,11 @@ var userSchema = new mongoose.Schema({
     passwordResetToken: String,
     passwordResetExpires: Date
 
-},{
+},
+{
     timestamps:true
-});
+}
+);
 
 userSchema.pre('save', async function (next){
     if(!this.isModified("password")){
