@@ -32,6 +32,8 @@ const router = express.Router();
 router.post("/admin-login", loginAdmin);
 router.post("/register", createUser);
 router.post("/login", loginUrlCtrl);
+router.get("/all-user", getallUser);
+
 
 router.post("/cart/apply-coupon", authMiddleware, applyCoupon);
 router.post("/cart/cash-order", authMiddleware, createOrder);
@@ -52,7 +54,7 @@ router.get("/logout", logout);
 router.delete("/empty-cart", authMiddleware, emptyCart);
 
 
-router.get("/all-user", authMiddleware, getallUser);
+
 router.get("/:id", authMiddleware, getaUser);
 router.put("/save-address", authMiddleware, SaveAddress);
 router.delete("/:id", authMiddleware, deleteaUser);

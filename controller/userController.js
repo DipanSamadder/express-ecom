@@ -89,7 +89,49 @@ const updatedUser = asyncHandler(async (req, res) => {
 
 const getallUser = asyncHandler( async (req,res) => {
     try{
-        const getUsers = await User.find();
+ 
+        //Filtering
+        const queryObj = {...req.query };
+        const excludeFields = ['page', 'sort', 'limit', 'fields'];
+        excludeFields.forEach((el) => delete queryObj[el]);
+
+        let queryStr = JSON.stringify(queryObj);
+        queryStr = queryStr.replace(/\b(gte|gt|lt|lte)\b/g, (match) => `$${match}`);
+        let query = User.find(JSON.parse(queryStr));
+
+        //Sroting
+        if(req.query.sort){
+            const sortBy = req.query.sort.split(',').join(" ");
+            query = query.sort(sortBy)
+        }else{
+            query = query.sort("-createdAt");
+        }
+        
+        //limiting the fields
+
+        if(req.query.fields){
+            const fields = req.query.fields.split(',').join(" ");
+            query = query.select(fields);
+        }else{
+            query = query.select('-__v');
+        }
+
+        //pagination
+
+        const page = req.query.page;
+        const limit = req.query.limit;
+        const skip = (page -1 ) * limit;
+
+        if(req.query.page){
+            const userCount = await User.countDocuments();
+            if(skip >= userCount) throw new Error("This page does not exists.");
+        }
+        
+        query = query.skip(skip).limit(limit);
+
+        const getUsers = await query;
+
+
         res.json(getUsers);
     }catch(error){
         throw new Error(error);
