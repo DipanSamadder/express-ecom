@@ -555,7 +555,9 @@ const createOrder = asyncHandler(async (req, res) => {
 
 //getOrders
 const getOrders = asyncHandler(async (req, res)=>{
+
     const { _id } = req.user;
+
     validatemongoDbId(_id);
     try{
         const userOrders = await Order.findOne({ orderBy: _id }).populate('products.product').exec();
@@ -588,6 +590,18 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
    }
 });
 
+const getAllOrders = asyncHandler(async (req, res) => {
+    try {
+      const alluserorders = await Order.find()
+        .populate("products.product")
+        .populate("orderBy")
+        .exec();
+      res.json(alluserorders);
+    } catch (error) {
+      throw new Error(error);
+    }
+  });
+
 module.exports = { 
 createUser,
 loginUrlCtrl,
@@ -611,5 +625,6 @@ emptyCart,
 applyCoupon,
 createOrder,
 getOrders,
-updateOrderStatus
+updateOrderStatus,
+getAllOrders
 };
