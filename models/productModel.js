@@ -15,7 +15,7 @@ var productSchema = new mongoose.Schema({
     },
     description:{
         type:String,
-        required:true,    
+        required:false,    
     },
     price:{
         type: Number,
@@ -42,8 +42,7 @@ var productSchema = new mongoose.Schema({
       type: Array,  
     },
     color:{
-        type: String,
-        require: true,
+        type: Array,
     },
     ratings:[
         {
