@@ -9,7 +9,12 @@ const createProduct = asyncHandler(async (req, res) =>{
             req.body.slug = slugify(req.body.title);
         }
         const newProduct = await Product.create(req.body);
-        res.json(newProduct);
+        const resp = {
+            status:200,
+            data:newProduct,
+            message: "Prdouct add succuss"
+        }
+        res.json(resp);
     }catch(error){
         throw new Error(error);
     }
