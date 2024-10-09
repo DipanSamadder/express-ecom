@@ -32,12 +32,49 @@ const updateBrand = asyncHandler(async (req, res) => {
   const { id } = req.params;
   validatemongoDbId(id);
   try {
-    const updateBrand = await Brand.findByIdAndUpdate(id, req.body, {
-      new: true,
+    console.log(req.body.images);
+
+    const { brand_id } = req.body;
+    const {
+      title,
+      shortDes,
+      author,
+      status,
+      metaDes,
+      metaKey,
+      metaTitle,
+      isIndexed,
+      images,
+    } = req.body;
+
+    const updatedBrand = await Brand.findByIdAndUpdate(
+      brand_id,
+      {
+        title,
+        shortDes,
+        author,
+        status,
+        metaDes,
+        metaKey,
+        metaTitle,
+        isIndexed,
+        images, // Updating the images field
+      },
+      { new: true } // Option to return the updated document
+    );
+
+    res.status(200).json({
+      status: 200,
+      data: updatedBrand,
+      message: "Brand updated successfully",
     });
-    res.json(updateBrand);
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Brand isn't updated.",
+    });
   }
 });
 
@@ -47,9 +84,18 @@ const getBrand = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const getaBrand = await Brand.findById(id);
-    res.json(getaBrand);
+    res.status(200).json({
+      status: 200,
+      data: getaBrand,
+      message: "Brand Show successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Brand isn't showing.",
+    });
   }
 });
 

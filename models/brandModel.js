@@ -18,7 +18,12 @@ var brandSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
-    images: { type: Array },
+    images: [
+      {
+        public_id: String,
+        url: String,
+      },
+    ],
     metaTitle: {
       type: String,
       required: false,
