@@ -35,9 +35,18 @@ const updateCategory = asyncHandler(async (req, res) => {
     const updateCategory = await Category.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateCategory);
+    res.status(200).json({
+      status: 200,
+      data: updateCategory,
+      message: "Data update successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't update.",
+    });
   }
 });
 
@@ -47,9 +56,19 @@ const getCategory = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const getaCategory = await Category.findById(id);
-    res.json(getaCategory);
+
+    res.status(200).json({
+      status: 200,
+      data: getaCategory,
+      message: "Category Show successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Category isn't showing.",
+    });
   }
 });
 
