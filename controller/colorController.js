@@ -28,9 +28,18 @@ const updateColor = asyncHandler(async (req, res) => {
     const updateColor = await Color.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateColor);
+    res.status(200).json({
+      status: 200,
+      data: updateColor,
+      message: "Data update successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't update.",
+    });
   }
 });
 
@@ -40,9 +49,19 @@ const getColor = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const getaColor = await Color.findById(id);
-    res.json(getaColor);
+
+    res.status(200).json({
+      status: 200,
+      data: getaColor,
+      message: "Show data successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't showing.",
+    });
   }
 });
 
@@ -50,9 +69,20 @@ const getColor = asyncHandler(async (req, res) => {
 const getAllColor = asyncHandler(async (req, res) => {
   try {
     const getallColor = await Color.find();
-    res.json(getallColor);
+    console.log(`${getallColor} ----color Contorller`);
+
+    res.status(200).json({
+      status: 200,
+      data: getallColor,
+      message: "Show all color successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't showing.",
+    });
   }
 });
 
@@ -62,9 +92,18 @@ const deleteColor = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteColor = await Color.findByIdAndDelete(id);
-    res.json(deleteColor);
+    res.status(200).json({
+      status: 200,
+      data: deleteColor,
+      message: "Delete data successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't deleted.",
+    });
   }
 });
 module.exports = {
