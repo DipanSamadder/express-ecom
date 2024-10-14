@@ -35,9 +35,18 @@ const updateCategory = asyncHandler(async (req, res) => {
     const updateCategory = await Category.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateCategory);
+    res.status(200).json({
+      status: 200,
+      data: updateCategory,
+      message: "Data update successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't update.",
+    });
   }
 });
 
@@ -47,9 +56,18 @@ const getCategory = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const getaCategory = await Category.findById(id);
-    res.json(getaCategory);
+    res.status(200).json({
+      status: 200,
+      data: getaCategory,
+      message: "Data show successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 
@@ -57,9 +75,18 @@ const getCategory = asyncHandler(async (req, res) => {
 const getAllCategory = asyncHandler(async (req, res) => {
   try {
     const getallCategory = await Category.find();
-    res.json(getallCategory);
+    res.status(200).json({
+      status: 200,
+      data: getallCategory,
+      message: "Data show all successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 
@@ -69,9 +96,18 @@ const deleteCategory = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteCategory = await Category.findByIdAndDelete(id);
-    res.json(deleteCategory);
+    res.status(200).json({
+      status: 200,
+      data: deleteCategory,
+      message: "Data delete successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't delete.",
+    });
   }
 });
 module.exports = {
