@@ -24,9 +24,18 @@ const createCoupon = asynHandler(async (req, res) => {
 const getAllCoupons = asynHandler(async (req, res) => {
   try {
     const getCoupon = await Coupon.find();
-    res.json(getCoupon);
+    res.status(200).json({
+      status: 200,
+      data: getCoupon,
+      message: "Data show successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 const getaCoupons = asynHandler(async (req, res) => {
@@ -34,9 +43,18 @@ const getaCoupons = asynHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const getCoupon = await Coupon.findById(id);
-    res.json(getCoupon);
+    res.status(200).json({
+      status: 200,
+      data: getCoupon,
+      message: "Data show successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 
@@ -47,9 +65,18 @@ const updateCoupons = asynHandler(async (req, res) => {
     const updateCoupon = await Coupon.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateCoupon);
+    res.status(200).json({
+      status: 200,
+      data: updateCoupon,
+      message: "Data update successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't update.",
+    });
   }
 });
 
@@ -58,9 +85,18 @@ const deleteCoupons = asynHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteCoupon = await Coupon.findByIdAndDelete(id);
-    res.json(deleteCoupon);
+    res.status(200).json({
+      status: 200,
+      data: deleteCoupon,
+      message: "Data delete successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't delete.",
+    });
   }
 });
 

@@ -45,9 +45,18 @@ const getaBlog = asyncHandler(async (req, res) => {
         new: true,
       }
     );
-    res.json(getBlog);
-  } catch (error) {
-    throw new Error(error);
+    res.status(200).json({
+      status: 200,
+      data: getBlog,
+      message: "Data show successfully",
+    });
+  } catch (err) {
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 
@@ -55,9 +64,18 @@ const getaBlog = asyncHandler(async (req, res) => {
 const getAllBlog = asyncHandler(async (req, res) => {
   try {
     const getAllBlog = await Blog.find();
-    res.json(getAllBlog);
-  } catch (error) {
-    throw new Error(error);
+    res.status(200).json({
+      status: 200,
+      data: getAllBlog,
+      message: "Data show all successfully",
+    });
+  } catch (err) {
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't show.",
+    });
   }
 });
 
@@ -69,9 +87,18 @@ const updateBlog = asyncHandler(async (req, res) => {
     const updateblog = await Blog.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.json(updateblog);
+    res.status(200).json({
+      status: 200,
+      data: updateblog,
+      message: "Data update successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't update.",
+    });
   }
 });
 
@@ -81,9 +108,18 @@ const deleteBlog = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteBlog = await Blog.findByIdAndDelete(id);
-    res.json(deleteBlog);
+    res.status(200).json({
+      status: 200,
+      data: deleteBlog,
+      message: "Data delete successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Data isn't delete.",
+    });
   }
 });
 
