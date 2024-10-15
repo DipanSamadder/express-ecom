@@ -103,9 +103,18 @@ const getBrand = asyncHandler(async (req, res) => {
 const getAllBrand = asyncHandler(async (req, res) => {
   try {
     const getallBrand = await Brand.find();
-    res.json(getallBrand);
+    res.status(200).json({
+      status: 200,
+      data: getallBrand,
+      message: "Brand show all successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Brand isn't show.",
+    });
   }
 });
 
@@ -115,9 +124,18 @@ const deleteBrand = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteBrand = await Brand.findByIdAndDelete(id);
-    res.json(deleteBrand);
+    res.status(200).json({
+      status: 200,
+      data: deleteBrand,
+      message: "Brand delete successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Brand isn't delete.",
+    });
   }
 });
 module.exports = {

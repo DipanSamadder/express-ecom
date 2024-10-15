@@ -88,9 +88,18 @@ const deleteCategory = asyncHandler(async (req, res) => {
   validatemongoDbId(id);
   try {
     const deleteCategory = await Category.findByIdAndDelete(id);
-    res.json(deleteCategory);
+    res.status(200).json({
+      status: 200,
+      data: deleteCategory,
+      message: "Category Delete successfully",
+    });
   } catch (err) {
-    throw new Error(err);
+    console.log(err.message);
+
+    res.status(500).json({
+      status: 500,
+      message: "Sorry! Category isn't Deleteing.",
+    });
   }
 });
 module.exports = {
